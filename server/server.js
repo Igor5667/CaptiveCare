@@ -16,9 +16,18 @@ mongoose.connect(url)
     .catch((err)=>console.log("Connection error: ", err.message))
 
 
+const userSchema = new mongoose.Schema({
+name: String,
+age: Number,
+city: String
+})
+const User = mongoose.model("test1",userSchema)
+
+
+
 app.get("/api/users", async (req,res)=>{
     try{
-        const users = await User.find({})
+        const users = await User.find({name: 'Igor'})
         res.json(users)
         
     }catch(err){
