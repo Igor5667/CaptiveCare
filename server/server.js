@@ -17,19 +17,18 @@ mongoose.connect(url)
 
 
 const userSchema = new mongoose.Schema({
-name: String,
-age: Number,
-city: String
+    name: String,
+    age: Number,
+    city: String
 })
-const User = mongoose.model("test1",userSchema)
+const User = mongoose.model("ts",userSchema)
 
 
 
-app.get("/api/users", async (req,res)=>{
+app.get("/prisoners", async (req,res)=>{
     try{
-        const users = await User.find({name: 'Igor'})
+        const users = await User.findOne({name: 'Marcin'})
         res.json(users)
-        
     }catch(err){
         res.status(500).json({message: err.message})
     }
@@ -41,7 +40,7 @@ app.listen(PORT, ()=>console.log(`Server express is running ${PORT}`))
 process.on('SIGINT', ()=>{
     console.log("Closing MongoDB")
     mongoose.disconnect()
-        .then(()=>console.log("MongoDB connection closed"))
+        .then(()=>console.log("Closed connection MongoDB"))
         .finally(()=>process.exit())
 })
 

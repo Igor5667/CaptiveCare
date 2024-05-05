@@ -7,7 +7,7 @@ function App() {
   async function fetchData(){
     console.log("I am fetching")
     try{
-      const res = await fetch("http://localhost:8080/api/users", {method: "GET"})
+      const res = await fetch("http://localhost:8080/prisoners", {method: "GET"})
       if(!res.ok){
         throw new Error(`network response was not ok: ${res.status}`)
       }
