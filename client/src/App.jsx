@@ -2,13 +2,16 @@ import { useState } from 'react'
 import axios from 'axios'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Button } from 'react-bootstrap'
 //pages
 import Login from './Pages/Login/Login'
 
 
 function App() {
-  const [user, setUser] = useState({})
+  const [isLogin, setIsLogin] = useState(false)
+
+  const switchPages = () => {
+
+  }
 
   async function fetchData(){
     console.log("I am fetching")
@@ -28,7 +31,7 @@ function App() {
 
   return (
     <>
-    <Login></Login>
+    {isLogin ? <Login />:null}
     </>
   )
 }
