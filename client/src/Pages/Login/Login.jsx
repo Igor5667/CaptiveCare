@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import './Login.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Button, Form, Col, Row } from 'react-bootstrap'
+import { Button, Form, Col, Row, Alert} from 'react-bootstrap'
 
 
-const Login = () => {
+const Login = ({switchPages}) => {
     const [loginInformations, setLoginInformations] = useState({login: "", password: ""})
 
     const handleLogin = (e) => {
         e.preventDefault()
         if (loginInformations.login === "admin@hejka.com" &&
             loginInformations.password === "kocham paczki") {
-            alert("zalogowano")
+            switchPages()
         }
     }
 
@@ -39,7 +39,12 @@ const Login = () => {
                             >
                             Login
                         </Button>
+                        
                     </Form>
+                    <Alert id='login-data-alert'>
+                        Login: admin@hejka.com <br />
+                        Password: kocham paczki
+                    </Alert>
                 </Col>
             </Row>
         </div> 

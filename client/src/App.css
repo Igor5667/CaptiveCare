@@ -1,0 +1,11 @@
+.col{
+    background-color: #E2D1C7;
+}
+.col-2{
+    background-color: #bea495;
+}
+.navigation{
+    list-style: none;
+    text-align: center;
+    margin: 22px 0;
+}

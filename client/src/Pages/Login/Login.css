@@ -44,3 +44,10 @@
     background-color: #82450F;
     color: #EFE6E1;
 }
+#login-data-alert{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: .6em;
+    padding: 7px;
+}
