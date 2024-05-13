@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
+import axios, { Axios } from 'axios'
 import './App.css'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -18,10 +18,9 @@ function App() {
   async function fetchData(){
     console.log("I am fetching")
     try{
-      const response = await axios.get("http://localhost:8080/prisoners")
-      const arr = [...prisoners, response.data]
-      setPrisoners(arr)
-
+      axios.get("http://localhost:8080/prisoners").then((response)=>{
+        setPrisoners(response.data)
+      })
     }catch(err){
       console.log("Error: ", err)
     }
@@ -33,13 +32,13 @@ function App() {
 
     <div className="row m-0">
       <nav className="col-2 py-4">
-        <h5>CaptiveCare</h5>
+        <li className='navigation h5'>Captive<span id='header-little-space'> </span>Care</li>
         <li className='navigation'>general info</li>
         <li className='navigation'>detail info</li>
         <li className='navigation'>log out</li>
       </nav>
       <div className="col vh-100 p-5">
-        <button class="btn btn-success" onClick={fetchData}>Fetch data</button>
+        <button className="btn btn-success" onClick={fetchData}>Fetch data</button>
         <table className="table table-striped ">
           <thead>
             <tr>
@@ -49,16 +48,15 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>3525</td>
-              <td>Igor</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <td>{prisoners[0]?._id.substring(0,4)??"id"}</td>
-              <td>{prisoners[0]?.name??"imie"}</td>
-              <td>{prisoners[0]?.age??"wiek"}</td>
-            </tr>
+            {
+              prisoners.map(prisoner=>
+                <tr key={prisoner._id}>
+                  <td>{prisoner?._id.substring(20,24)??"Brak"}</td>
+                  <td>{prisoner?.name??"Brak"}</td>
+                  <td>{prisoner?.age??"Brak"}</td>
+                </tr>
+              )
+            }
           </tbody>
         </table>
       </div>

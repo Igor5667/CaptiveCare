@@ -18,16 +18,18 @@ mongoose.connect(url)
 
 const userSchema = new mongoose.Schema({
     name: String,
+    surname: String,
     age: Number,
-    city: String
-})
+    reason: String,
+    release_date: Date
+  })
 const User = mongoose.model("ts",userSchema)
 
 
 
 app.get("/prisoners", async (req,res)=>{
     try{
-        const users = await User.findOne({name: 'Marcin'})
+        const users = await User.find()
         res.json(users)
     }catch(err){
         res.status(500).json({message: err.message})
