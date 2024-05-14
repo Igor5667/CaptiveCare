@@ -24,7 +24,10 @@ const Login = ({switchPages}) => {
 
     return (
         <div id="main-container" className='container-fluid text-center'>
-            {showInvalidAlert&&<Alert variant='danger' id='invalid-alert'>Invalid data inputed</Alert>}
+            {showInvalidAlert&&
+            <Alert variant='danger' id='invalid-alert'>
+                Invalid data inputed
+            </Alert>}
             <Row className='row' sx={2}>
                 <Col id='image-frame' sx={12} sm={5} className='vh-20 vh-sm-100 p-0'>
                     <p id='welcome-text'>WELCOME<br />BACK</p>
