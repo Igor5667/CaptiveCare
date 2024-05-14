@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("ts",userSchema)
 
 
-
 app.get("/prisoners", async (req,res)=>{
     try{
         const users = await User.find()

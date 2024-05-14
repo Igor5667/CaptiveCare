@@ -6,6 +6,7 @@ import { Button, Form, Col, Row, Alert} from 'react-bootstrap'
 
 const Login = ({switchPages}) => {
     const [loginInformations, setLoginInformations] = useState({login: "", password: ""})
+    const [showInvalidAlert, setShowIvalidAlert] = useState(false)
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -13,10 +14,17 @@ const Login = ({switchPages}) => {
             loginInformations.password === "kocham paczki") {
             switchPages()
         }
+        else{
+            setShowIvalidAlert(true)
+            setTimeout(()=>{
+                setShowIvalidAlert(false)
+            }, 3000)
+        }
     }
 
     return (
         <div id="main-container" className='container-fluid text-center'>
+            {showInvalidAlert&&<Alert variant='danger' id='invalid-alert'>Invalid data inputed</Alert>}
             <Row className='row' sx={2}>
                 <Col id='image-frame' sx={12} sm={5} className='vh-20 vh-sm-100 p-0'>
                     <p id='welcome-text'>WELCOME<br />BACK</p>

@@ -8,7 +8,7 @@ import Login from './Pages/Login/Login'
 
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
   const [prisoners, setPrisoners] = useState([])
 
   const switchPages = () => {
