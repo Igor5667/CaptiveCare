@@ -1,14 +1,27 @@
-.col{
-    background-color: #E2D1C7;
-}
 .col-2{
     background-color: #bea495;
+}
+.col{
+    background-color: #E2D1C7;
 }
 .navigation{
     list-style: none;
     text-align: center;
     margin: 22px 0;
+    cursor: pointer;
+}
+.h5{
+    cursor: default;
 }
 #header-little-space{
     font-size: 1px;
+}
+#content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.link{
+    text-decoration: none;
+    color: black;
 }

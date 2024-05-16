@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     surname: String,
     age: Number,
     reason: String,
-    release_date: Date
+    release_date: String,
   })
 const User = mongoose.model("ts",userSchema)
 
