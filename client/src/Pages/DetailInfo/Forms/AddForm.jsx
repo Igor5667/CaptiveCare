@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, InputGroup, Stack } from 'react-bootstrap';
 import './FormsStyle.css'
 import axios from 'axios';
@@ -6,12 +6,28 @@ import axios from 'axios';
 const AddForm = ({setIsFormAdd, fetchData}) => {
 
     const [prisoner, setPrisoner] = useState({})
+    const [isValid, setIsValid] = useState(false)
+
+    const checkIsValid = () => {
+        const { name, surname, age, reason, release_date } = prisoner;
+        setIsValid(
+            name?.trim() &&
+            surname?.trim() &&
+            age && age !== 0 &&
+            reason?.trim() &&
+            release_date?.trim()
+        );
+    }
 
     async function addPrisoner(){
         await axios.post(`http://localhost:8080/prisoners/post`, prisoner)
             .then(()=>{fetchData(); setIsFormAdd(false)})
             .catch(err=>console.log(err))
     }
+
+    useEffect(() => {
+        checkIsValid();
+    }, [prisoner]);
 
     return (<>
         <div id='shadow'></div>
@@ -49,7 +65,7 @@ const AddForm = ({setIsFormAdd, fetchData}) => {
                     onChange={(e)=>{setPrisoner({...prisoner, release_date:e.target.value})}}/>
             </InputGroup>
             <Stack direction='horizontal' className='pt-3' gap={5}>
-                <Button className='mx-auto' variant='success' onClick={addPrisoner}>Add Prisoner</Button>
+                <Button className='mx-auto' variant='success' onClick={addPrisoner} disabled={!isValid}>Add Prisoner</Button>
                 <Button className='mx-auto' onClick={()=>setIsFormAdd(false)}>Back</Button>
             </Stack>
         </Form>
