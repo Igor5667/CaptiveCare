@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios'
 import './DetailInfo.css'
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
+//components
+import EditForm from './EditForm/EditForm';
 
 const DetailInfo = () => {
     const [prisoners, setPrisoners] = useState([])
     const [isForm, setIsForm] = useState(false)
-    const [whichId, setWhichId] = useState("")
+    const [currentPrisoner, setCurrentPrisoner] = useState({})
 
     async function fetchData(){
         console.log("I am fetching")
@@ -19,48 +22,15 @@ const DetailInfo = () => {
         }
     }
 
-    const handleEdit = (id) => {
-        console.log(`handle edit for: ${id}`)
+    const handleEdit = (prisoner) => {
         setIsForm(true)
-        setWhichId(id)
+        setCurrentPrisoner(prisoner)
     }
     
 
     return (
         <>
-            {isForm&&<>
-            <div id='shadow'></div>
-            <Form id="edit-form" className='position-absolute'>
-                <h4>Edit form</h4>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>ID</InputGroup.Text>
-                    <InputGroup.Text >{whichId}</InputGroup.Text>
-                </InputGroup>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>Name</InputGroup.Text>
-                    <Form.Control onChange={(e)=>console.log(e.target.value)}/>
-                </InputGroup>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>Surname</InputGroup.Text>
-                    <Form.Control onChange={(e)=>console.log(e.target.value)}/>
-                </InputGroup>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>Age</InputGroup.Text>
-                    <Form.Control onChange={(e)=>console.log(e.target.value)}/>
-                </InputGroup>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>Reason</InputGroup.Text>
-                    <Form.Control onChange={(e)=>console.log(e.target.value)}/>
-                </InputGroup>
-                <InputGroup className='mt-3' size='sm'>
-                    <InputGroup.Text>Release date</InputGroup.Text>
-                    <Form.Control onChange={(e)=>console.log(e.target.value)}/>
-                </InputGroup>
-                <Button className='mt-3 me-5' variant='success'>Confirm</Button>
-                <Button className='mt-3 me-5' variant='danger'>Delete User</Button>
-                <Button className='mt-3 ' onClick={()=>setIsForm(false)}>Back</Button>
-            </Form>
-            </>}
+            {isForm&&<EditForm currentPrisoner={currentPrisoner} setIsForm={setIsForm}/>}
             
             <button className="btn btn-success my-2 w-50" onClick={fetchData}>Fetch data</button>
             <table className="table table-striped ">
@@ -72,6 +42,7 @@ const DetailInfo = () => {
                     <th scope="col">Age</th>
                     <th scope="col">Reason</th>
                     <th scope="col">Release date</th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                     </tr>
                 </thead>
@@ -85,7 +56,8 @@ const DetailInfo = () => {
                             <td>{prisoner?.age??"Brak"}</td>
                             <td>{prisoner?.reason??"Brak"}</td>
                             <td>{prisoner?.release_date??"Brak"}</td>
-                            <td><Button size='sm' variant='outline-success' onClick={()=>handleEdit(prisoner._id)}>Edit</Button></td>
+                            <td><Button size='sm' variant='outline-success' onClick={()=>handleEdit(prisoner)}>Edit</Button></td>
+                            <td><Button size='sm' variant='outline-danger'>Delete</Button></td>
                         </tr>
                     )
                     }
