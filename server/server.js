@@ -35,7 +35,7 @@ app.get("/prisoners", async (req,res)=>{
     }
 })
 
-app.delete("/prisoners/:id", async (req, res)=>{
+app.delete("/prisoners/delete/:id", async (req, res)=>{
     const userId = req.params.id
     try{
         const deletedUser = await User.findByIdAndDelete(userId)
@@ -43,6 +43,16 @@ app.delete("/prisoners/:id", async (req, res)=>{
             return res.status(404).json({message:"User not found"})
         }
         res.json({message:"User Deleted X"})
+    }catch(err){
+        res.status(500).json({message: err.message})
+    }
+})
+
+app.post("/prisoners/post/", async (req, res)=>{
+    const prisoner = req.body
+    try{
+        await User.create(prisoner)
+        res.json("added user")
     }catch(err){
         res.status(500).json({message: err.message})
     }

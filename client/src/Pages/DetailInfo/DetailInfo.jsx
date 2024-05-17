@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
 import './DetailInfo.css'
 import { Button, Stack } from 'react-bootstrap';
 
 //components
-import EditForm from './EditForm/EditForm';
+import EditForm from './Forms/EditForm';
+import AddForm from './Forms/AddForm'
 
 const DetailInfo = () => {
     const [prisoners, setPrisoners] = useState([])
     const [isFormEdit, setIsFormEdit] = useState(false)
+    const [isFormAdd, setIsFormAdd] = useState(false)
     const [currentPrisoner, setCurrentPrisoner] = useState({})
 
     async function fetchData(){
@@ -25,10 +27,9 @@ const DetailInfo = () => {
     async function deletePrisoner(prisoner){
         const confirm = window.confirm(`Are you sure you want to delete prisoner ${prisoner.name}?`)
         if(!confirm){return}
-        await axios.delete(`http://localhost:8080/prisoners/${prisoner._id}`)
+        await axios.delete(`http://localhost:8080/prisoners/delete/${prisoner._id}`)
             .then(fetchData)
             .catch(err=>console.log(err))
-
     }
 
 
@@ -37,13 +38,16 @@ const DetailInfo = () => {
         setCurrentPrisoner(prisoner)
     }
     
+    useEffect(()=>{ 
+        fetchData() 
+    }, [])
 
     return (
         <>
             {isFormEdit&&<EditForm currentPrisoner={currentPrisoner} setIsFormEdit={setIsFormEdit}/>}
+            {isFormAdd&&<AddForm setIsFormAdd={setIsFormAdd} fetchData={fetchData}/>}
             <Stack direction='horizontal' gap={4} className='mb-2'>
-                <Button variant='success' className='mx-auto w-25' onClick={fetchData}>Fetch Data</Button>
-                <Button variant='success' className='mx-auto w-25' onClick={fetchData}>Add Prisoner</Button>
+                <Button variant='success' className='mx-auto w-25' onClick={()=>setIsFormAdd(true)}>Add Prisoner</Button>
             </Stack>
             <table className="table table-striped ">
                 <thead>
