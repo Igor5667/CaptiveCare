@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import axios from 'axios'
 import './DetailInfo.css'
-import { Button } from 'react-bootstrap';
+import { Button, Stack } from 'react-bootstrap';
 
 //components
 import EditForm from './EditForm/EditForm';
 
 const DetailInfo = () => {
     const [prisoners, setPrisoners] = useState([])
-    const [isForm, setIsForm] = useState(false)
+    const [isFormEdit, setIsFormEdit] = useState(false)
     const [currentPrisoner, setCurrentPrisoner] = useState({})
 
     async function fetchData(){
         console.log("I am fetching")
         try{
-            axios.get("http://localhost:8080/prisoners").then((response)=>{
+            await axios.get("http://localhost:8080/prisoners").then((response)=>{
             setPrisoners(response.data)
             })
         }catch(err){
@@ -22,17 +22,29 @@ const DetailInfo = () => {
         }
     }
 
+    async function deletePrisoner(prisoner){
+        const confirm = window.confirm(`Are you sure you want to delete prisoner ${prisoner.name}?`)
+        if(!confirm){return}
+        await axios.delete(`http://localhost:8080/prisoners/${prisoner._id}`)
+            .then(fetchData)
+            .catch(err=>console.log(err))
+
+    }
+
+
     const handleEdit = (prisoner) => {
-        setIsForm(true)
+        setIsFormEdit(true)
         setCurrentPrisoner(prisoner)
     }
     
 
     return (
         <>
-            {isForm&&<EditForm currentPrisoner={currentPrisoner} setIsForm={setIsForm}/>}
-            
-            <button className="btn btn-success my-2 w-50" onClick={fetchData}>Fetch data</button>
+            {isFormEdit&&<EditForm currentPrisoner={currentPrisoner} setIsFormEdit={setIsFormEdit}/>}
+            <Stack direction='horizontal' gap={4} className='mb-2'>
+                <Button variant='success' className='mx-auto w-25' onClick={fetchData}>Fetch Data</Button>
+                <Button variant='success' className='mx-auto w-25' onClick={fetchData}>Add Prisoner</Button>
+            </Stack>
             <table className="table table-striped ">
                 <thead>
                     <tr>
@@ -50,14 +62,14 @@ const DetailInfo = () => {
                     {
                     prisoners.map(prisoner=>
                         <tr key={prisoner._id}>
-                            <td>{prisoner?._id.substring(20,24)??"Brak"}</td>
+                            <td>...{prisoner?._id.substring(20,24)??"Brak"}</td>
                             <td>{prisoner?.name??"Brak"}</td>
                             <td>{prisoner?.surname??"Brak"}</td>
                             <td>{prisoner?.age??"Brak"}</td>
                             <td>{prisoner?.reason??"Brak"}</td>
                             <td>{prisoner?.release_date??"Brak"}</td>
                             <td><Button size='sm' variant='outline-success' onClick={()=>handleEdit(prisoner)}>Edit</Button></td>
-                            <td><Button size='sm' variant='outline-danger'>Delete</Button></td>
+                            <td><Button size='sm' variant='outline-danger' onClick={()=>deletePrisoner(prisoner)}>Delete</Button></td>
                         </tr>
                     )
                     }

@@ -35,6 +35,19 @@ app.get("/prisoners", async (req,res)=>{
     }
 })
 
+app.delete("/prisoners/:id", async (req, res)=>{
+    const userId = req.params.id
+    try{
+        const deletedUser = await User.findByIdAndDelete(userId)
+        if(!deletedUser){
+            return res.status(404).json({message:"User not found"})
+        }
+        res.json({message:"User Deleted X"})
+    }catch(err){
+        res.status(500).json({message: err.message})
+    }
+})
+
 
 app.listen(PORT, ()=>console.log(`Server express is running ${PORT}`))
 

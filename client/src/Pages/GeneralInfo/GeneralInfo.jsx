@@ -34,7 +34,7 @@ const GeneralInfo = () => {
                 {
                 prisoners.map(prisoner=>
                     <tr key={prisoner._id}>
-                    <td>{prisoner?._id.substring(20,24)??"Brak"}</td>
+                    <td>...{prisoner?._id.substring(20,24)??"Brak"}</td>
                     <td>{prisoner?.name??"Brak"}</td>
                     <td>{prisoner?.age??"Brak"}</td>
                     </tr>

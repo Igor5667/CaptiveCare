@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Button, Form, InputGroup, Stack } from 'react-bootstrap';
 import './EditForm.css'
 
-const EditForm = ({setIsForm, currentPrisoner}) => {
+const EditForm = ({setIsFormEdit, currentPrisoner}) => {
 
     const [prisoner, setPrisoner] = useState(currentPrisoner)
 
     return (<>
         <div id='shadow'></div>
         <Form id="edit-form" className='position-absolute'>
-            <h4>Edit form</h4>
+            <h4 className='text-center'>Edit form</h4>
             <InputGroup className='mt-3' size='sm'>
-                <InputGroup.Text>ID</InputGroup.Text>
-                <InputGroup.Text>{prisoner._id}</InputGroup.Text>
+                <InputGroup.Text className='ms-auto'>ID</InputGroup.Text>
+                <InputGroup.Text className='me-auto'>{prisoner._id}</InputGroup.Text>
             </InputGroup>
             <InputGroup className='mt-3' size='sm'>
                 <InputGroup.Text>Name</InputGroup.Text>
@@ -51,7 +51,7 @@ const EditForm = ({setIsForm, currentPrisoner}) => {
             </InputGroup>
             <Stack direction='horizontal' className='pt-3' gap={5}>
                 <Button className='mx-auto' variant='success'>Confirm</Button>
-                <Button className='mx-auto' onClick={()=>setIsForm(false)}>Back</Button>
+                <Button className='mx-auto' onClick={()=>setIsFormEdit(false)}>Back</Button>
             </Stack>
         </Form>
     </>);
