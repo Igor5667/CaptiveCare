@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Routes, Route, Link, NavLink } from 'react-router-dom'
 
 //pages
-import Login from './Pages/Login/Login'
-import GeneralInfo from './Pages/GeneralInfo/GeneralInfo'
-import DetailInfo from './Pages/DetailInfo/DetailInfo'
+import Login from './pages/Login/Login'
+import GeneralInfo from './pages/GeneralInfo/GeneralInfo'
+import DetailInfo from './pages/DetailInfo/DetailInfo'
 
 
 function App() {
@@ -16,8 +16,6 @@ function App() {
     setIsLogin(!isLogin)
   }
 
-
-  
   return (
     <>
     {isLogin ? <Login switchPages={switchPages}/>:<>
@@ -41,5 +39,3 @@ function App() {
 }
 
 export default App
-
-

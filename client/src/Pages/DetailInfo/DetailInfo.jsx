@@ -4,8 +4,8 @@ import './DetailInfo.css'
 import { Button, Stack } from 'react-bootstrap';
 
 //components
-import EditForm from './Forms/EditForm';
-import AddForm from './Forms/AddForm'
+import EditForm from '../../components/EditForm';
+import AddForm from '../../components/AddForm'
 
 const DetailInfo = () => {
     const [prisoners, setPrisoners] = useState([])
@@ -14,7 +14,6 @@ const DetailInfo = () => {
     const [currentPrisoner, setCurrentPrisoner] = useState({})
 
     async function fetchData(){
-        console.log("I am fetching")
         try{
             await axios.get("http://localhost:8080/prisoners").then((response)=>{
             setPrisoners(response.data)

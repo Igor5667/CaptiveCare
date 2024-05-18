@@ -3,21 +3,14 @@ import { Button, Form, InputGroup, Stack } from 'react-bootstrap';
 import './FormsStyle.css'
 import axios from 'axios';
 
+//helpers
+import { validatePrisoner } from '../utils/helpers';
+
 const AddForm = ({setIsFormAdd, fetchData}) => {
 
     const [prisoner, setPrisoner] = useState({})
     const [isValid, setIsValid] = useState(false)
 
-    const checkIsValid = () => {
-        const { name, surname, age, reason, release_date } = prisoner;
-        setIsValid(
-            name?.trim() &&
-            surname?.trim() &&
-            age && age !== 0 &&
-            reason?.trim() &&
-            release_date?.trim()
-        );
-    }
 
     async function addPrisoner(){
         await axios.post(`http://localhost:8080/prisoners/post`, prisoner)
@@ -26,7 +19,7 @@ const AddForm = ({setIsFormAdd, fetchData}) => {
     }
 
     useEffect(() => {
-        checkIsValid();
+        setIsValid(validatePrisoner(prisoner));
     }, [prisoner]);
 
     return (<>
