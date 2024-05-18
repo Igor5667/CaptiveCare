@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, InputGroup, Stack } from 'react-bootstrap';
 import './FormsStyle.css'
+import axios from 'axios';
 
-const EditForm = ({setIsFormEdit, currentPrisoner}) => {
+//helpers
+import { validatePrisoner } from '../utils/helpers';
+
+const EditForm = ({setIsFormEdit, currentPrisoner, fetchData}) => {
 
     const [prisoner, setPrisoner] = useState(currentPrisoner)
+    const [isValid, setIsValid] = useState(false)
+
+    async function updatePrisoner(){
+        await axios.put(`http://localhost:8080/prisoners/put`, prisoner)
+            .then(()=>{fetchData(); setIsFormEdit(false)})
+            .catch(err=>console.log(err))
+    }
+
+    useEffect(() => {
+        setIsValid(validatePrisoner(prisoner));
+    }, [prisoner]);
 
     return (<>
         <div id='shadow'></div>
@@ -50,7 +65,7 @@ const EditForm = ({setIsFormEdit, currentPrisoner}) => {
                     onChange={(e)=>{setPrisoner({...prisoner, release_date:e.target.value})}}/>
             </InputGroup>
             <Stack direction='horizontal' className='pt-3' gap={5}>
-                <Button className='mx-auto' variant='success'>Confirm</Button>
+                <Button className='mx-auto' variant='success' disabled={!isValid} onClick={updatePrisoner}>Confirm</Button>
                 <Button className='mx-auto' onClick={()=>setIsFormEdit(false)}>Back</Button>
             </Stack>
         </Form>

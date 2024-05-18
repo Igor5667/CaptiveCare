@@ -43,7 +43,7 @@ const DetailInfo = () => {
 
     return (
         <>
-            {isFormEdit&&<EditForm currentPrisoner={currentPrisoner} setIsFormEdit={setIsFormEdit}/>}
+            {isFormEdit&&<EditForm currentPrisoner={currentPrisoner} setIsFormEdit={setIsFormEdit} fetchData={fetchData}/>}
             {isFormAdd&&<AddForm setIsFormAdd={setIsFormAdd} fetchData={fetchData}/>}
             <Stack direction='horizontal' gap={4} className='mb-2'>
                 <Button variant='success' className='mx-auto w-25' onClick={()=>setIsFormAdd(true)}>Add Prisoner</Button>

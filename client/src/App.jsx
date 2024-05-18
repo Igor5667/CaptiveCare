@@ -26,7 +26,7 @@ function App() {
               <li className='navigation'><NavLink className='link' to="/detail">Detail Info</NavLink></li>
               <li className='navigation' onClick={switchPages}>log out</li>
           </nav>
-          <div className="col p-5"  id='content'>
+          <div className="col p-4 pb-0"  id='content'>
             <Routes>
               <Route index element={<GeneralInfo/>}/>
               <Route path='/detail' element={<DetailInfo/>}/>

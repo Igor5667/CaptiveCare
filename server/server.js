@@ -42,17 +42,33 @@ app.delete("/prisoners/delete/:id", async (req, res)=>{
         if(!deletedUser){
             return res.status(404).json({message:"User not found"})
         }
-        res.json({message:"User Deleted X"})
+        res.json({message:"Prisoner Deleted X"})
     }catch(err){
         res.status(500).json({message: err.message})
     }
 })
 
-app.post("/prisoners/post/", async (req, res)=>{
+app.post("/prisoners/post", async (req, res)=>{
     const prisoner = req.body
     try{
-        await User.create(prisoner)
-        res.json("added user")
+        const createdUser = await User.create(prisoner)
+        if (!createdUser) {
+            return res.status(404).json({ message: 'Prisoner not found' })
+        }
+        res.json("prisoner added")
+    }catch(err){
+        res.status(500).json({message: err.message})
+    }
+})
+
+app.put("/prisoners/put", async (req, res)=>{
+    const prisoner = req.body
+    try{
+        const updatedPrisoner = await User.findByIdAndUpdate(prisoner._id, prisoner)
+        if (!updatedPrisoner) {
+            return res.status(404).json({ message: 'Prisoner not found' })
+        }
+        res.json("prisoner updated")
     }catch(err){
         res.status(500).json({message: err.message})
     }
